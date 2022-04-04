@@ -1,0 +1,108 @@
+<div class="content-wrapper d-flex" style="flex-flow: column; font-family: 'Lato', sans-serif !important;">
+    <div class="row mb-5 pb-4" style="width: 100%">
+        <div class="col-12">
+            <div class="container-fluid">
+                <div class="row mt-5">
+                    <div class="col-lg-4" style="height: 75vh; border-right: 1px solid grey">
+                        <h3>My Friends</h3>
+                        <div class="row col-12">
+                            <p class="text-muted">You currently have {{ myFriends.length }} friend(s).</p>
+                        </div>
+
+                        <div class="row col-12" style="flex-direction: column">
+                            <div
+                                *ngFor="let f of myFriends"
+                                class="p-2 unselectable"
+                                [ngClass]="{
+                                    'friend-card': !f.selected,
+                                    'friend-card-selected': f.selected   
+                                }"
+                                style="height: 50px"
+                                (click)="selectFriend(f)">
+                                <div class="row container">
+                                    <div class="col-8">
+                                        <img class="mr-2" src="{{ f.picture }}"
+                                            style="height: 30px; border-radius: 100%; border: 0.8px solid black">
+                                        {{ f.firstName }} {{ f.lastName }}
+                                    </div>
+
+                                    <div class="col-3 container" style="text-align: center">
+                                        <span *ngIf="f.unread" style="top: 20px;background-color: #e48f8f; border-radius: 70%; height: 50px; width: 50px !important">
+                                            &nbsp;&nbsp;{{ f.unread }}&nbsp;&nbsp;
+                                        </span>
+                                    </div>
+
+                                    <div class="col-1 p-0" style="float: right">
+                                        <span (click)="removeFriend(f)" style="cursor: pointer; float: right">x</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8" style="height: 75vh">
+                        <div class="row col-12">
+                            <h3 class="mr-3">My Messages</h3>
+                            <span 
+                                style="color: red; cursor: pointer; right: 0; position: absolute
+                                "(click)="clearConversation()" *ngIf="selectedFriend">
+                                    Clear Conversation
+                            </span>
+                        </div>
+                        <hr class="mx-0">
+                        <div *ngIf="selectedFriend" #scrollable style="overflow: auto; height: 60vh; width: 100%">
+                            <div style="width: 80%" *ngIf="messages && messages.length > 0">
+                                <ul style="list-style: none; padding: 0; margin-top:10px; width: auto; display: flex; flex-direction: column; margin-left: 20px; margin-right: -100px" #content>
+                                    <li class="my-2 d-block row" style="padding: 0" *ngFor="let message of messages; index as i" #messages>
+                                        <div class="col-12" style="clear:both; min-height: 100%">
+                                            <div style="max-width: 65%; margin-left: auto; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end" class="d-flex"
+                                            *ngIf="message.from.toString() === myID.toString(); else otherSender">
+                                                <span class="bg-primary chat-bubble" style="max-width: 100%; color: white;" placement="left" [ngbTooltip]="tipContent">
+                                                    {{message.message}}
+                                                </span>
+                                                <ng-template #tipContent><span style="color: rgb(212, 212, 212)">
+                                                        <i>
+                                                            <span *ngIf="!message.sameDay">
+                                                                {{message.dt_send.split('T')[0]}}&nbsp;
+                                                            </span>
+                                                            {{message.dt_send.split('T')[1].split('.')[0].split(':')[0]}}:{{message.dt_send.split('T')[1].split('.')[0].split(':')[1]}}
+                                                        </i>
+                                                    </span>
+                                                </ng-template>
+                                                <img src="{{ownPicture}}" class="d-inline-flex img-responsive chat-icon ml-1">
+                                            </div>
+                                            <ng-template #otherSender>
+                                                <div style="max-width: 65%; margin-right: auto; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start" class="d-flex">
+                                                    <img src="{{friendPicture}}" class="d-inline-flex img-responsive chat-icon mr-1">
+                                                    <p class="chat-bubble" style="background-color: #e48f8f" placement="right" [ngbTooltip]="tipContent">
+                                                        {{message.message}}
+                                                    </p>
+                                                    <ng-template #tipContent>
+                                                        <span style="color: rgb(212, 212, 212)">
+                                                            <i>
+                                                                <span *ngIf="!message.sameDay">
+                                                                    {{message.dt_send.split('T')[0]}}&nbsp;
+                                                                </span>
+                                                                {{message.dt_send.split('T')[1].split('.')[0].split(':')[0]}}:{{message.dt_send.split('T')[1].split('.')[0].split(':')[1]}}
+                                                            </i>
+                                                        </span>
+                                                    </ng-template>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div *ngIf="messages && messages.length === 0" style="top: 50%; left: 40%; position: absolute">
+                                <h3 class="text-muted">No Messages To Display</h3>
+                            </div>
+                        </div>
+                        <div *ngIf="selectedFriend" class="container" style="bottom: 0; position: absolute">
+                            <label for="message" class="label-bln-nosep" [ngClass]="{'label-bln-active': message}">Type Message...</label>
+                            <input type="text" class="input-bln" id="message" [(ngModel)]="message" (keyup.enter)="sendMessage()" style="width: 90%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

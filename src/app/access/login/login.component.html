@@ -1,0 +1,32 @@
+<div class="col-12" style="padding: 20px">
+    <form [formGroup]="loginForm">
+        <h4>Login</h4>
+        <div *ngIf="hasAlert || loginForm.touched && loginForm.invalid" class="row col-12 alert alert-danger">
+            {{ alertText }}
+            <div class="row col-12" *ngIf="email.touched && email.invalid">
+                <div *ngIf="email.errors.required" class="row col-12">
+                    Email is required!
+                </div>
+            </div>
+            <div class="row col-12" *ngIf="password.touched && password.invalid">
+                <div *ngIf="password.errors.required" class="row col-12">
+                    Password is required!
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" formControlName="email" type="text" id="email">
+        </div>
+    
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" formControlName="password" type="password" id="password">
+        </div>
+    
+        <div class="form-group">
+            <button class="btn btn-outline-success" style="margin-right: 20px" (click)="login()">Login</button>
+            <button class="btn btn-outline-success" (click)="router.navigate(['/signup'])">Signup</button>
+        </div>
+    </form>
+</div>

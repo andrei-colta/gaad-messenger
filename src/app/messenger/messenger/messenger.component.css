@@ -1,0 +1,66 @@
+.friend-card {
+    cursor: pointer;
+}
+
+.friend-card:hover {
+    background-color: rgb(214, 99, 99);
+    transition: all 0.2s ease-out;
+}
+
+.friend-card-selected {
+    background-color: rgb(184, 87, 87);
+    cursor: pointer;
+}
+
+.chat-bubble {
+    border-radius: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: 0 !important;
+    display: inline-flex;
+    position: relative;
+}
+
+.chat-icon {
+    min-width:40px; 
+    width:40px; 
+    height:40px; 
+    padding:3px; 
+    border-radius: 50%;
+}
+
+.listItem {
+    position: relative;
+    word-wrap:break-word;
+    cursor: pointer;
+    list-style: none;
+    padding-inline-start: 25px !important;
+}
+
+.listItem:hover {
+    content: '';
+    position: absolute;
+    border-right:2px solid rgb(214, 99, 99);
+    border-bottom:2px solid rgb(214, 99, 99);
+    width:12px;
+    height:12px;
+    top: calc(50% + 10px);
+    right: 80px;
+    transform: translateY(-5%) rotate(-45deg);
+    transition: all 0.2s ease;
+}
+  
+.listItem:before{
+    content: '';
+    position: absolute;
+    border-right:2px solid rgb(214, 99, 99);
+    border-bottom:2px solid rgb(214, 99, 99);
+    width:10px;
+    height:10px;
+    top: calc(50% + 10px);
+    right: 80px;
+    transform: translateY(-5%) rotate(-45deg);
+    transition: all 0.2s ease;
+}

@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-md fixed-top hideable nav-style unselectable" [ngClass]="{'hidden':scrollingDown}" #navWrap>
+    <!-- Logo -->
+    <a routerLink='' class="navbar-brand">Gaad Messenger</a>
+    <!-- Hamburger button for collapsing nav on small screens -->
+    <button class="navbar-toggler hidden-sm-up" style="color: #49d37b" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Menu -->
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" style="transition: all 0.3s ease" id="navbarsDefault">
+        <ul class="navbar-nav ml-md-5 mr-auto">
+            <li class="nav-item">
+                <a routerLink='' class="nav-link d-block">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Home
+                    </p>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
+                <a routerLink='/find-doctors' class="nav-link d-block">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Find Doctors
+                    </p>
+                </a>
+            </li> -->
+        </ul>
+        <ul class="navbar-nav mr-md-5 ml-auto">
+            <li class="nav-item" *ngIf="!isLogged">
+                <a routerLink='login' class="nav-link text-small">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Login
+                    </p>
+                </a>
+            </li>        
+            <li class="nav-item" *ngIf="!isLogged">
+                <a routerLink='signup' class="nav-link text-small">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Sign up
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown *ngIf="isLogged">
+                <a class="nav-link dropdown-toggle" id="id03" ngbDropdownToggle>
+                    <img class="mr-3" src="{{picture}}" style="height: 35px; border-radius: 100%; border: 0.75px solid #ad2f44"> 
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        <span *ngIf="firstName">{{ firstName }}</span>
+                        <span *ngIf="!firstName">{{ email }}</span>
+                    </p>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="id03" ngbDropdownMenu>
+                    <a class="dropdown-item" (click)="router.navigate(['/profile/' + id])">
+                        View Profile
+                    </a>
+                    <a class="dropdown-item" (click)="router.navigate(['/edit-profile/'])">
+                        Edit Profile
+                    </a> 
+                    <a class="dropdown-item" (click)="router.navigate(['/friends'])">
+                        My Friends
+                    </a>
+                    <a class="dropdown-item" (click)="router.navigate(['/messenger'])">
+                        Messenger
+                    </a>
+                    <a class="dropdown-item" *ngIf="type === 'D' || type === 'R'" (click)="router.navigate(['/control-panel/' + id])">
+                        Control Panel
+                    </a>
+                    <a class="dropdown-item" routerLink='login' (click)="accessService.logout()">
+                        Logout
+                    </a>
+                </div> 
+            </li>      
+        </ul>
+    </div>
+</nav>
