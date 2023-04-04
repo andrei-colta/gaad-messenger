@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import sha256 from "crypto-js/sha256";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
@@ -7,7 +7,7 @@ import { SocketService } from "../socket.service";
 @Injectable({
   providedIn: "root",
 })
-export class AccessService implements OnInit {
+export class AccessService {
   rootURL = "https://node.startupskylab.com/medical/";
   signupURL = this.rootURL + "gd_signup";
   loginURL = this.rootURL + "gd_login";
@@ -15,9 +15,7 @@ export class AccessService implements OnInit {
 
   loggedObservable = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private socketService: SocketService) {}
-
-  ngOnInit() {
+  constructor(private http: HttpClient, private socketService: SocketService) {
     this.loggedObservable.next(localStorage.getItem("user_id") !== null);
   }
 
@@ -44,7 +42,7 @@ export class AccessService implements OnInit {
     return new Promise<any>((resolve) => {
       this.http.post(this.loginURL, input).subscribe((response: any) => {
         if (response.status === "LoginSuccessful") {
-          this.socketService.initSocket(response.data.id);
+          // this.socketService.initSocket(response.data.id);
         }
         resolve(response);
       });
